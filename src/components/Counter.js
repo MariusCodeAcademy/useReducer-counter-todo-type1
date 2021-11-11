@@ -11,7 +11,10 @@ function counterReducer(state, action) {
   switch (action.type) {
     case 'daugiau':
       return { counterValue: state.counterValue + 1 };
+    case '2+':
+      return { counterValue: state.counterValue + 2 };
     case 'maziau':
+      if (state.counterValue <= 0) return state;
       return { counterValue: state.counterValue - 1 };
     default:
       console.log('type not found');
@@ -31,9 +34,13 @@ function Counter(props) {
 
   const handleDecrement = () => {
     // neleisti eiti zemiau nulio
-    if (state.counterValue <= 0) return;
+    // if (state.counterValue <= 0) return;
     // setCounterValue(counterValue - 1);
     dispatch({ type: 'maziau' });
+  };
+
+  const handle2plus = () => {
+    dispatch({ type: '2+' });
   };
 
   // jsx
@@ -43,6 +50,7 @@ function Counter(props) {
       <h2>{state.counterValue}</h2>
       <button onClick={handleIncrement}>Increment</button>
       <button onClick={handleDecrement}>Decrement</button>
+      <button onClick={handle2plus}>2 +</button>
     </div>
   );
 }
