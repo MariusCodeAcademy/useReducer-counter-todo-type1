@@ -1,11 +1,12 @@
 import './App.css';
-import MyBtn from './components/MyBtn';
+import Counter from './components/Counter';
 
 function App() {
   return (
     <div>
       <h2>App</h2>
-      <MyBtn></MyBtn>
+      <Counter>Likes</Counter>
+      {/* <Counter>Storms</Counter> */}
     </div>
   );
 }
