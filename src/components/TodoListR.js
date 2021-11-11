@@ -4,7 +4,7 @@ import TodoItem from './TodoItem';
 // newTodoObj {id: 1, title: '', doneStatus: false }
 
 const initTodos = [
-  { id: 1, title: 'Go to park', doneStatus: false },
+  { id: 1, title: 'Go to park', doneStatus: true },
   { id: 2, title: 'Go to Mall', doneStatus: false },
 ];
 
@@ -13,6 +13,14 @@ function todoReducer(todos, action) {
   switch (action.type) {
     case 'ADD':
       return [...todos, action.payload];
+    case 'DELETE':
+      return todos.filter((t) => t.id !== action.payload);
+    case 'CHECK':
+      return todos.map((t) => {
+        if (t.id === action.payload) return { ...t, doneStatus: !t.doneStatus };
+        return t;
+      });
+
     default:
       return todos;
   }
@@ -23,11 +31,20 @@ function TodoListR() {
 
   const [newTodoTitle, setNewTodoTitle] = useState('');
   // lastId - apskaiciuota reiksme
-  const lastTodoId = todos[todos.length - 1].id;
+  const lastTodoId = todos.length > 0 ? todos[todos.length - 1].id : 0;
   console.log('lastTodoId', lastTodoId);
 
   const handleNewTodo = () => {
     dispatch({ type: 'ADD', payload: generateTodo() });
+  };
+
+  const handleDeleteDispatch = (deleteId) => {
+    console.log('handleDeleteDispatch', deleteId);
+    dispatch({ type: 'DELETE', payload: deleteId });
+  };
+
+  const handleCheckDispatch = (checkId) => {
+    dispatch({ type: 'CHECK', payload: checkId });
   };
 
   // helper fn
@@ -47,7 +64,12 @@ function TodoListR() {
       <button onClick={handleNewTodo}>Add Todo</button>
       <ul>
         {todos.map((todo) => (
-          <TodoItem key={todo.id} todo={todo} />
+          <TodoItem
+            onCheck={handleCheckDispatch}
+            key={todo.id}
+            todo={todo}
+            onDelete={handleDeleteDispatch}
+          />
         ))}
       </ul>
     </section>
