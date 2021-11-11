@@ -6,7 +6,7 @@ function App() {
   return (
     <div>
       <h2>App</h2>
-      <Counter>Likes</Counter>
+      {/* <Counter>Likes</Counter> */}
       <TodoListR />
       {/* <Counter>Storms</Counter> */}
     </div>
